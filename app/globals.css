@@ -5,6 +5,15 @@
   --foreground: #171717;
 }
 
+@theme {
+  --color-yellow0: #D1AE00;
+  --color-yellow1: #FBD100;
+  --color-yellow2: #FEF200;
+  --color-green0: #0A3D30;
+  --color-green1: #105D48;
+  --color-green2: #299C00;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
