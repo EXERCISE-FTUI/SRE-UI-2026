@@ -2,12 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-
-// type
-interface AdminSession {
-    id: string;
-    username: string;
-}
+import { AdminSession } from "@/app/types/types";
 
 export default function AdminLoginPage() {
     const [adminSession, setAdminSession] = useState<AdminSession | null>(null);

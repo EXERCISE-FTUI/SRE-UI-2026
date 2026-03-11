@@ -1,0 +1,35 @@
+import { sql } from "@/lib/db";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(req: NextRequest) {
+    try {
+        const params = req.nextUrl.searchParams;
+        const article_id = params.get("article_id");
+
+        const result = await sql`
+            select * from articles where article_id = ${article_id}
+        `;
+
+        if (result.length == 0) {
+            return NextResponse.json({
+                success: false,
+                message: "Artikel tidak ditemukan",
+            }, {
+                status: 404
+            });
+        }
+
+        return NextResponse.json({
+            success: true,
+            message: "Artikel berhasil didapat",
+            data: result[0]
+        });
+    } catch (error) {
+        return NextResponse.json({
+            success: false,
+            message: error,
+        }, {
+            status: 500
+        });
+    }
+}

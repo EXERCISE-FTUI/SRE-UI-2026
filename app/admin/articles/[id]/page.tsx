@@ -1,17 +1,21 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import FileUpload from "@/components/FileUpload"
 import { useForm } from "react-hook-form"
-import { useRouter } from "next/navigation"
+import { useRouter, useParams } from "next/navigation"
+import { ArticleType, ResponseType } from "@/app/types/types"
+
 import dynamic from "next/dynamic"
 import "react-quill-new/dist/quill.snow.css"
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false })
 
-export default function CreateArticlePage() {
+export default function EditArticlePage() {
+    const params = useParams();
     const router = useRouter();
-    const [title, setTitle] = useState("")
+    const [article, setArticle] = useState<ArticleType>();
+    const [title, setTitle] = useState<string>("")
     const [content, setContent] = useState("")
     const [cover, setCover] = useState<File | string | null>(null)
     const [coverUrl, setCoverUrl] = useState("")
@@ -25,6 +29,42 @@ export default function CreateArticlePage() {
         }
     })
 
+    useEffect(() => {
+        const getArticle = async () => {
+            try {
+                const res = await fetch(`/api/admin/get-article?article_id=${params.id}`, {
+                    method: "GET"
+                });
+
+                if (!res.ok) {
+                    alert("Fetch tidak berhasil");
+                }
+
+                const resData : ResponseType<ArticleType> = await res.json();
+                if (resData.success) {
+                    setArticle(resData.data);
+                } else {
+                    alert(resData.message);
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        getArticle();
+    }, [])
+
+    useEffect(() => {
+        if (article?.title && article?.cover_url && article?.content) {
+            setTitle(article.title);
+            setCover(article.cover_url);
+            setContent(article.content);
+            setCoverUrl(article.cover_url);
+            setIs_recommended(article.is_recommended);
+        }
+
+    }, [article])
+
     const handleFileUpload = async (
         file: File | string | null,
         fileType: string
@@ -34,7 +74,6 @@ export default function CreateArticlePage() {
                 form.setValue("coverUrl", "")
                 setCoverUrl("")
             }
-
             localStorage.setItem("formData", JSON.stringify(form.getValues()))
             return
         }
@@ -72,10 +111,11 @@ export default function CreateArticlePage() {
 
     const handleSubmit = async () => {
         const payload = {
+            article_id: params.id,
             title,
             cover_url: coverUrl,
             content,
-            is_recommended,
+            is_recommended
         }
 
         if (!title || !coverUrl || !content) {
@@ -83,14 +123,14 @@ export default function CreateArticlePage() {
             return;
         }
 
-        const res = await fetch("/api/admin/create-articles", {
-            method: "POST",
+        const res = await fetch("/api/admin/edit-article", {
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
         })
 
         if (res.ok) {
-            alert("Article created!");
+            alert("Article edited!");
             router.push('/admin/articles');
         }
     }
@@ -128,7 +168,7 @@ export default function CreateArticlePage() {
 
                     Recommend
                 </label>
-                
+
                 <div className="bg-white rounded-lg border">
                     <style>{`
                         .ql-editor { color: black; }

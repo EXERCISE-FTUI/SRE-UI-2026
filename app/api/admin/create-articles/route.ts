@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
-        const { title, cover_url, content } = await req.json();
+        const { title, cover_url, content, is_recommended } = await req.json();
 
-        if (!title || !cover_url || !content) {
+        if (!title || !cover_url || !content || !is_recommended) {
             return NextResponse.json({
                 success: false,
                 error: "Tidak lengkap!",
@@ -13,7 +13,7 @@ export async function POST(req: Request) {
         }
 
         const result = await sql`
-            insert into articles (title, cover_url, content) values (${title}, ${cover_url}, ${content}) returning *
+            insert into articles (title, cover_url, content, is_recommended) values (${title}, ${cover_url}, ${content}, ${is_recommended}) returning *
         `;
 
         return NextResponse.json({
