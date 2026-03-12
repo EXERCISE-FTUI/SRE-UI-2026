@@ -32,7 +32,6 @@ export async function POST(req: Request) {
             coverUrl: result.secure_url,
             public_id: result.public_id
         }, { status: 200 });
-
     } catch (error) {
         console.error(error);
         return NextResponse.json({

@@ -4,12 +4,12 @@ import { NextResponse } from "next/server";
 export async function GET() {
     try {
         const result = await sql`
-            select * from articles
+            select * from news
         `;
 
         return NextResponse.json({
             success: true,
-            message: "Berhasil mendapatkan semua artikel",
+            message: "Berhasil mendapatkan semua news",
             data: result,
         });
     } catch (err) {

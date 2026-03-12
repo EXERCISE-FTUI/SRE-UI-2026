@@ -21,5 +21,10 @@ export type NewsType = {
 export type ResponseType<T> = {
     success: boolean,
     message: string,
-    data: T[]
+    data: T
+}
+
+export type AdminSession = {
+    id: string;
+    username: string;
 }
