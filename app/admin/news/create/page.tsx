@@ -79,7 +79,7 @@ export default function CreateNewsPage() {
         }
 
         if (!title || !coverUrl || !content) {
-            alert("Artikel belum lengkap!");
+            alert("News belum lengkap!");
             return;
         }
 

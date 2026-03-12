@@ -5,7 +5,7 @@ export async function POST(req: Request) {
     try {
         const { title, cover_url, content, is_recommended } = await req.json();
 
-        if (!title || !cover_url || !content || !is_recommended) {
+        if (!title || !cover_url || !content) {
             return NextResponse.json({
                 success: false,
                 error: "Tidak lengkap!",
