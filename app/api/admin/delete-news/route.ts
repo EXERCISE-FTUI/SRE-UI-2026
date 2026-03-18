@@ -8,7 +8,7 @@ export async function DELETE(req: NextRequest) {
 
         const result = await sql`
             delete from news where news_id = ${news_id} returning *
-        `;
+        ` as Record<string, any>[];
 
         if (result.length == 0) {
             return NextResponse.json({

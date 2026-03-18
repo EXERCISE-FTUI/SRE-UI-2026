@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
 
         const result = await sql`
             select * from news where news_id = ${news_id}
-        `;
+        ` as Record<string, any>[];
 
         if (result.length == 0) {
             return NextResponse.json({

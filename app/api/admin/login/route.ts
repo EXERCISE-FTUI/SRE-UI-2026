@@ -6,7 +6,7 @@ export async function POST(req: Request) {
 
   const result = await sql`
     SELECT verify_admin(${username}, ${password}) AS valid
-  `;
+  ` as Record<string, any>[];
 
   if (result[0].valid) {
     return NextResponse.json({ success: true });

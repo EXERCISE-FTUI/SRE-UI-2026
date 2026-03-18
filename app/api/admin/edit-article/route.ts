@@ -6,7 +6,7 @@ export async function PUT(req: NextRequest) {
         const { article_id, title, cover_url, content, is_recommended } = await req.json();
         const result = await sql`
             update articles set title = ${title}, cover_url = ${cover_url}, content = ${content}, is_recommended = ${is_recommended} where article_id = ${article_id}  returning *
-        `;
+        ` as Record<string, any>[];
 
         if (result.length == 0) {
             return NextResponse.json({

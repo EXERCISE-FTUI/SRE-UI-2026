@@ -5,7 +5,7 @@ export async function GET() {
     try {
         const result = await sql`
             select * from articles
-        `;
+        ` as Record<string, any>[];
 
         return NextResponse.json({
             success: true,

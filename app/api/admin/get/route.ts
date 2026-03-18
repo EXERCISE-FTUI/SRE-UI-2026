@@ -12,7 +12,7 @@ export async function GET(req: Request) {
 
         const result = await sql`
             select id, username, created_at from admins where username = ${username} limit 1
-        `;
+        ` as Record<string, any>[];
 
         if (result.length === 0) {
             return NextResponse.json(
