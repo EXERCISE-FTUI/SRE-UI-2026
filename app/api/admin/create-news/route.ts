@@ -1,4 +1,5 @@
 import { sql } from "@/lib/db";
+import { generateSlug } from "@/lib/utils";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -12,8 +13,10 @@ export async function POST(req: Request) {
             }, { status: 400 })
         }
 
+        const slug = generateSlug(title);
+
         const result = await sql`
-            insert into news (title, cover_url, content, is_recommended) values (${title}, ${cover_url}, ${content}, ${is_recommended}) returning *
+            insert into news (title, slug, cover_url, content, is_recommended) values (${title}, ${slug}, ${cover_url}, ${content}, ${is_recommended}) returning *
         `;
 
         return NextResponse.json({
