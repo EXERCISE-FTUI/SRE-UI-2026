@@ -2,8 +2,13 @@ import React from 'react';
 import Image from 'next/image';
 import HeroBanner from '@/components/HeroBanner';
 import NewsList from '@/components/NewsList';
+import { getAllNews, getRecommendedNews } from '@/lib/data';
 
-const AllNewsPage: React.FC = () => {
+const AllNewsPage = async () => {
+  const news = await getAllNews();
+  const recommended = await getRecommendedNews();
+  const topFeatured = recommended[0];
+
   return (
     <main className="relative min-h-screen bg-[#FFFFFF] font-['Open_Sans'] overflow-hidden">
       {/* Ornament 1: Top-left, behind content */}
@@ -40,15 +45,19 @@ const AllNewsPage: React.FC = () => {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 py-16">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-8 md:py-12 lg:py-16">
         {/* Page Title */}
-        <h1 className="font-['SF_Pro_Display'] font-bold text-5xl 2xl:text-[80px] text-[#105D48] text-center mb-12">
+        <h1 className="font-['SF_Pro_Display'] font-bold text-3xl md:text-4xl lg:text-5xl 2xl:text-[80px] text-[#105D48] text-center mb-6 md:mb-8 lg:mb-12">
           All News
         </h1>
 
         {/* Hero Banner Component */}
-        <HeroBanner />
-        <NewsList />
+        <HeroBanner
+          title={topFeatured?.title}
+          coverUrl={topFeatured?.cover_url}
+          href={topFeatured?.slug ? `/news/${topFeatured.slug}` : undefined}
+        />
+        <NewsList items={news} baseRoute="/news" />
 
       </div>
     </main>
