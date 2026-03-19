@@ -15,11 +15,11 @@ export default function Hero() {
 
       <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-[#FEF200]/30 to-transparent z-10 pointer-events-none"></div>
 
-      <div className="absolute inset-x-0 bottom-0 translate-y-[5%] flex justify-center z-20 pointer-events-none">
+      <div className="absolute left-0 bottom-0 translate-y-[5%] flex justify-start z-20 pointer-events-none">
         <img 
-          src="/srehero.svg" 
+          src="/srehero1.png" 
           alt="SRE Watermark" 
-          className="w-[120%] opacity-50 select-none" 
+          className="w-[90%] opacity-50 select-none" 
         />
       </div>
 

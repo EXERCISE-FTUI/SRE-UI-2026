@@ -11,8 +11,10 @@ type ArticleDetailPageProps = {
 
 export default async function ArticleDetail({ params }: ArticleDetailPageProps) {
   const resolvedParams = await params;
-  const article = await getArticleBySlug(resolvedParams.slug);
-  const recommended = await getRecommendedArticles();
+  const [article, recommended] = await Promise.all([
+    getArticleBySlug(resolvedParams.slug),
+    getRecommendedArticles(),
+  ]);
 
   if (!article) {
     notFound();

@@ -18,7 +18,7 @@ const NewsList: React.FC<NewsListProps> = ({ items, baseRoute }) => {
           className="flex flex-col lg:flex-row lg:items-start gap-4 md:gap-6 lg:gap-8 2xl:gap-[123px] w-full group cursor-pointer"
         >
           {/* Left Part: Image & Green Line */}
-          <div className="flex flex-col items-center gap-4 md:gap-5 2xl:gap-[43px] w-full lg:w-[30%] lg:max-w-[300px] 2xl:max-w-[441px]">
+          <div className="flex flex-col items-center gap-1 md:gap-5 2xl:gap-[25px] w-full lg:w-[30%] lg:max-w-[300px] 2xl:max-w-[441px]">
             {/* Image */}
             <div className="relative w-full aspect-[6/5] rounded-[20px] overflow-hidden">
               <Image

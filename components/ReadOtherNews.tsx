@@ -10,7 +10,7 @@ interface ReadOtherNewsProps {
 
 const ReadOtherNews: React.FC<ReadOtherNewsProps> = ({ title, newsItems, baseRoute }) => {
   return (
-    <section className="w-full mt-24 pt-16 border-t border-gray-100">
+    <section className="w-full mt-24 pt-16 border-t border-[#D9D9D9]">
       <h2 className="font-['Open_Sans'] font-semibold text-[48.15px] text-[#105D48] text-left mb-12">
         {title}
       </h2>

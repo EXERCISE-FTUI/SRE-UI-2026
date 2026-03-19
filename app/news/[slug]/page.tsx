@@ -12,14 +12,12 @@ type NewsDetailPageProps = {
 const NewsDetailPage = async ({ params }: NewsDetailPageProps) => {
   const resolvedParams = await params;
   const news = await getNewsBySlug(resolvedParams.slug);
-  console.log("DATA BERITA DARI DATABASE:", news);
 
   if (!news) {
     notFound();
   }
 
   const recommendedNews = await getRecommendedNews();
-
   return (
     <main className="w-full max-w-[1600px] mx-auto px-4 md:px-8 lg:px-12 xl:px-24 2xl:px-[175px] py-8 md:py-10 lg:py-12">
       <div className="grid grid-cols-1 lg:grid-cols-10 gap-6 md:gap-8 lg:gap-10 2xl:gap-[60px]">
