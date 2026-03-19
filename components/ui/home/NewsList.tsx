@@ -88,7 +88,7 @@ export default async function HomeArticles() {
         {/* --- VIEW ALL LINK --- */}
         <div className="flex justify-center pt-4">
           <Link
-            href="/article"
+            href="/all-articles"
             className="text-[#105D48] text-2xl font-bold hover:text-[#0b4031] transition-colors"
             style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
           >
