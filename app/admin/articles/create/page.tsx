@@ -6,41 +6,66 @@ import FileUpload from "@/components/FileUpload"
 import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import dynamic from "next/dynamic"
+import mammoth from "mammoth"
 import "react-quill-new/dist/quill.snow.css"
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false })
 
 export default function CreateArticlePage() {
-    const router = useRouter();
+    const router = useRouter()
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
     const [cover, setCover] = useState<File | string | null>(null)
     const [coverUrl, setCoverUrl] = useState("")
-    const [is_recommended, setIs_recommended] = useState(false);
+    const [is_recommended, setIs_recommended] = useState(false)
+    const [isConverting, setIsConverting] = useState(false)
+
     const form = useForm({
-        defaultValues: {
-            title: "",
-            coverUrl: "",
-            content: "",
-            is_recommended: false,
-        }
+        defaultValues: { title: "", coverUrl: "", content: "", is_recommended: false }
     })
 
-    const handleFileUpload = async (
-        file: File | string | null,
-        fileType: string
-    ) => {
+    const handleDocUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        const allowedTypes = [
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/msword",
+        ]
+
+        if (!allowedTypes.includes(file.type)) {
+            alert("Only .docx or .doc files are supported.")
+            return
+        }
+
+        setIsConverting(true)
+        try {
+            const arrayBuffer = await file.arrayBuffer()
+            const result = await mammoth.convertToHtml({ arrayBuffer })
+
+            if (result.messages.length > 0) {
+                console.warn("Mammoth warnings:", result.messages)
+            }
+
+            setContent(result.value) 
+        } catch (err) {
+            console.error("Failed to convert document:", err)
+            alert("Failed to convert document. Please try again.")
+        } finally {
+            setIsConverting(false)
+        }
+    }
+
+    const handleFileUpload = async (file: File | string | null, fileType: string) => {
         if (!file) {
             if (fileType === "cover") {
                 form.setValue("coverUrl", "")
                 setCoverUrl("")
             }
-
             localStorage.setItem("formData", JSON.stringify(form.getValues()))
             return
         }
 
         if (typeof file === "string") return
-
         if (!file.type.includes("image")) {
             console.log("Only images are allowed")
             return
@@ -56,11 +81,10 @@ export default function CreateArticlePage() {
             })
 
             const data = await response.json()
-            console.log(JSON.stringify(data));
-            
+
             if (fileType === "cover") {
                 form.setValue("coverUrl", data.coverUrl)
-                setCoverUrl(data.coverUrl)  
+                setCoverUrl(data.coverUrl)
                 setCover(data.coverUrl)
             }
 
@@ -71,16 +95,11 @@ export default function CreateArticlePage() {
     }
 
     const handleSubmit = async () => {
-        const payload = {
-            title,
-            cover_url: coverUrl,
-            content,
-            is_recommended,
-        }
+        const payload = { title, cover_url: coverUrl, content, is_recommended }
 
         if (!title || !coverUrl || !content) {
-            alert("Artikel belum lengkap!");
-            return;
+            alert("Artikel belum lengkap!")
+            return
         }
 
         const res = await fetch("/api/admin/create-articles", {
@@ -90,8 +109,13 @@ export default function CreateArticlePage() {
         })
 
         if (res.ok) {
-            alert("Article created!");
-            router.push('/admin/articles');
+            alert("Article created!")
+            router.push("/admin/articles")
+        } else {
+            const result = await res.json();
+            if (!result.success) {
+                alert(result.message.detail);
+            }
         }
     }
 
@@ -112,27 +136,45 @@ export default function CreateArticlePage() {
                         maxSize={1}
                         file={cover}
                         onChange={(file) => {
-                            setCover(file)  
+                            setCover(file)
                             handleFileUpload(file, "cover")
                         }}
                     />
                 </div>
 
-                <label className="text-green1 font-bold text-[15px] flex justify-start  items-center">
-                    <input 
+                <label className="text-green1 font-bold text-[15px] flex justify-start items-center">
+                    <input
                         type="checkbox"
                         checked={is_recommended}
                         onChange={(e) => setIs_recommended(e.target.checked)}
                         className="mr-2"
                     />
-
                     Recommend
                 </label>
-                
+
+                <div className="flex flex-col gap-2">
+                    <label className="text-green1 font-bold text-[15px]">
+                        Import from Document (.docx)
+                    </label>
+                    <div className="flex items-center gap-3">
+                        <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-md border border-green1 text-green1 text-sm font-medium hover:bg-green1 hover:text-white transition-colors">
+                            {isConverting ? "Converting..." : "Choose .docx file"}
+                            <input
+                                type="file"
+                                accept=".docx,.doc"
+                                className="hidden"
+                                onChange={handleDocUpload}
+                                disabled={isConverting}
+                            />
+                        </label>
+                        <span className="text-gray-400 text-xs">
+                            Converts Word document content into the editor below
+                        </span>
+                    </div>
+                </div>
+
                 <div className="bg-white rounded-lg">
-                    <style>{`
-                        .ql-editor { color: black; }
-                    `}</style>
+                    <style>{`.ql-editor { color: black; }`}</style>
                     <ReactQuill
                         theme="snow"
                         value={content}

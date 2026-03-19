@@ -28,7 +28,7 @@ export async function POST(req: Request) {
         });
     } catch (err) {
         return NextResponse.json(
-            { success: false, message: "Error menyimpan" },
+            { success: false, message: err },
             { status: 500 }
         );
     }

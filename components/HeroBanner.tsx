@@ -26,7 +26,13 @@ const HeroBanner: React.FC<HeroBannerProps> = ({ title, coverUrl, href }) => {
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 lg:gap-4">
           {/* Left: Title and Subtitle */}
           <div className="flex flex-col">
-            <h1 className="font-['Open_Sans'] font-bold text-2xl md:text-4xl lg:text-6xl 2xl:text-[138px] text-[#F5F5F5] leading-none">
+            <h1 className="
+                font-['Open_Sans'] font-bold 
+                text-[clamp(24px,5vw,80px)]
+                text-[#F5F5F5] 
+                leading-tight
+                max-w-[70%]
+              ">
               {title}
             </h1>
           </div>

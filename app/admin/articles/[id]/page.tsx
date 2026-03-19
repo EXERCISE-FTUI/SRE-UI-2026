@@ -6,7 +6,7 @@ import FileUpload from "@/components/FileUpload"
 import { useForm } from "react-hook-form"
 import { useRouter, useParams } from "next/navigation"
 import { ArticleType, ResponseType } from "@/app/types/types"
-
+import mammoth from "mammoth"
 import dynamic from "next/dynamic"
 import "react-quill-new/dist/quill.snow.css"
 const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false })
@@ -20,6 +20,7 @@ export default function EditArticlePage() {
     const [cover, setCover] = useState<File | string | null>(null)
     const [coverUrl, setCoverUrl] = useState("")
     const [is_recommended, setIs_recommended] = useState(false);
+    const [isConverting, setIsConverting] = useState(false)
     const form = useForm({
         defaultValues: {
             title: "",
@@ -28,6 +29,38 @@ export default function EditArticlePage() {
             is_recommended: false,
         }
     })
+
+    const handleDocUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0]
+        if (!file) return
+
+        const allowedTypes = [
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            "application/msword",
+        ]
+
+        if (!allowedTypes.includes(file.type)) {
+            alert("Only .docx or .doc files are supported.")
+            return
+        }
+
+        setIsConverting(true)
+        try {
+            const arrayBuffer = await file.arrayBuffer()
+            const result = await mammoth.convertToHtml({ arrayBuffer })
+
+            if (result.messages.length > 0) {
+                console.warn("Mammoth warnings:", result.messages)
+            }
+
+            setContent(result.value) 
+        } catch (err) {
+            console.error("Failed to convert document:", err)
+            alert("Failed to convert document. Please try again.")
+        } finally {
+            setIsConverting(false)
+        }
+    }
 
     useEffect(() => {
         const getArticle = async () => {
@@ -132,6 +165,11 @@ export default function EditArticlePage() {
         if (res.ok) {
             alert("Article edited!");
             router.push('/admin/articles');
+        } else {
+            const result = await res.json();
+            if (!result.success) {
+                alert(result.message.detail);
+            }
         }
     }
 
@@ -168,6 +206,27 @@ export default function EditArticlePage() {
 
                     Recommend
                 </label>
+
+                <div className="flex flex-col gap-2">
+                    <label className="text-green1 font-bold text-[15px]">
+                        Import from Document (.docx)
+                    </label>
+                    <div className="flex items-center gap-3">
+                        <label className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 rounded-md border border-green1 text-green1 text-sm font-medium hover:bg-green1 hover:text-white transition-colors">
+                            {isConverting ? "Converting..." : "Choose .docx file"}
+                            <input
+                                type="file"
+                                accept=".docx,.doc"
+                                className="hidden"
+                                onChange={handleDocUpload}
+                                disabled={isConverting}
+                            />
+                        </label>
+                        <span className="text-gray-400 text-xs">
+                            Converts Word document content into the editor below
+                        </span>
+                    </div>
+                </div>
 
                 <div className="bg-white rounded-lg">
                     <style>{`
