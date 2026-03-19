@@ -143,7 +143,7 @@ export default function CreateNewsPage() {
                 </div>
 
                 <div className="flex justify-end mt-10">
-                    <Button onClick={handleSubmit} className="bg-green1 px-6">
+                    <Button onClick={handleSubmit} className="bg-green1 px-6 text-white">
                         Save
                     </Button>
                 </div>

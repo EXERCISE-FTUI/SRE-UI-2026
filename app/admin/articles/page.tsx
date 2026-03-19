@@ -66,7 +66,7 @@ export default function ArticesPage() {
                         className="rounded-full bg-green1 w-20 h-20 max-md:w-10 max-md:h-10 flex justify-center items-center transition-transform duration-200 hover:scale-104"
                         onClick={handleCreate}
                     >
-                        <span className="text-[80px] max-md:text-[20px] font-light">+</span>
+                        <span className="text-[80px] max-md:text-[20px] text-white font-light">+</span>
                     </button>
                     <h1 className="font-bold text-[20px] max-md:text-[12px] text-center text-green1">
                         Create
