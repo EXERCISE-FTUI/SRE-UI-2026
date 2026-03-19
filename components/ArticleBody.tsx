@@ -22,6 +22,7 @@ const ArticleBody: React.FC<ArticleBodyProps> = ({ content, buttonText, buttonLi
   const pathname = usePathname();
   const [currentUrl, setCurrentUrl] = useState('');
   const isHtmlContent = /<[^>]+>/.test(content);
+  const sanitizedContent = content.replace(/&nbsp;/gi, ' ').replace(/\u00A0/g, ' ').replace(/text-align:\s*left;?/gi, '');
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -49,12 +50,30 @@ const ArticleBody: React.FC<ArticleBodyProps> = ({ content, buttonText, buttonLi
     <div className="flex flex-col mt-6 md:mt-8 lg:mt-10">
       {isHtmlContent ? (
         <div
-          className="font-sans font-normal text-sm md:text-base lg:text-[20px] text-black leading-relaxed md:leading-relaxed lg:leading-relaxed text-justify mb-4 md:mb-6"
-          dangerouslySetInnerHTML={{ __html: content }}
+          className="
+            font-sans font-normal text-sm md:text-base lg:text-[20px] text-black 
+            leading-relaxed text-justify mb-4 md:mb-6
+            max-w-full overflow-hidden break-words
+            [&_*]:max-w-full
+            [&_img]:h-auto
+            [&_pre]:overflow-x-auto
+            [&_table]:block [&_table]:overflow-x-auto
+            [&_p]:mb-4
+            [&_p]:leading-[1.8]
+            [&_p]:indent-8
+            [&_h1]:text-center [&_h1]:!text-center
+            [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mt-6 [&_h1]:mb-3
+            [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mt-5 [&_h2]:mb-2
+            [&_h3]:text-lg [&_h3]:font-semibold [&_h3]:mt-4 [&_h3]:mb-2
+            [&_ul]:list-disc [&_ul]:ml-6 [&_ul]:mb-4
+            [&_ol]:list-decimal [&_ol]:ml-6 [&_ol]:mb-4
+            [&_strong]:font-semibold
+          "
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
         />
       ) : (
         <p className="font-sans font-normal text-sm md:text-base lg:text-[20px] text-black leading-relaxed text-justify mb-4 md:mb-6 whitespace-pre-line">
-          {content}
+          {sanitizedContent}
         </p>
       )}
 

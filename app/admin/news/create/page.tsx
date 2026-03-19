@@ -129,7 +129,7 @@ export default function CreateNewsPage() {
                     Recommend
                 </label>
                 
-                <div className="bg-white rounded-lg border">
+                <div className="bg-white rounded-lg">
                     <style>{`
                         .ql-editor { color: black; }
                     `}</style>
