@@ -13,11 +13,11 @@ export default async function HomeArticles() {
 
   return (
     <section className="w-full py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-6 md:px-12 flex flex-col gap-12">
+      <div className="mx-auto px-6 lg:px-[140px] flex flex-col gap-12">
         
         {/* --- HERO ARTICLE CARD --- */}
         {topFeatured && (
-          <div className="relative w-full h-[400px] md:h-[450px] rounded-3xl overflow-hidden shadow-lg group">
+          <div className="relative w-full h-[400px] lg:h-[600px] rounded-3xl overflow-hidden shadow-lg group">
             {/* Background Image */}
             <Image
               src={topFeatured.cover_url || '/placeholder-hero.jpg'} // Fallback image if missing
