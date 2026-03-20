@@ -50,7 +50,7 @@ export default function WhatWeDo() {
 
   return (
     <section className="relative isolate w-full py-20 flex flex-col items-center gap-12 bg-white overflow-hidden">
-      <div className="absolute max-md:hidden left-0 top-[10%] w-[250px] h-[350px] md:w-[450px] md:h-[750px] -translate-x-[10%] pointer-events-none z-0">
+      <div className="absolute max-md:hidden left-[-100px] top-[10%] w-[250px] h-[350px] md:w-[450px] md:h-[750px] -translate-x-[10%] pointer-events-none z-0">
         <Image src="/Line7.svg" alt="Green curve" fill className="object-contain object-left" />
       </div>
       <div className="absolute max-md:hidden right-0 top-[5%] w-[250px] h-[350px] md:w-[450px] md:h-[600px] translate-x-[0%] pointer-events-none z-0">
@@ -71,7 +71,7 @@ export default function WhatWeDo() {
 
       <div
         ref={emblaRef}
-        className="relative z-10 w-full cursor-grab active:cursor-grabbing overflow-hidden"
+        className="relative z-10 w-full cursor-grab active:cursor-grabbing overflow-hidden pointer-events-none"
         style={{
           clipPath: isMobile ? "none" : "inset(0 130px 0 130px)"
         }}
