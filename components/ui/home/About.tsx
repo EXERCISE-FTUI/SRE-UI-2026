@@ -69,7 +69,7 @@ export default function About() {
                 src="/mission.svg" 
                 alt="Solar Panels" 
                 fill 
-                className="object-cover z-0 scale-[1.35]" 
+                className="object-cover z-0" 
               />
               <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-[#1b4f43] to-transparent z-10 pointer-events-none"></div>
             </div>
