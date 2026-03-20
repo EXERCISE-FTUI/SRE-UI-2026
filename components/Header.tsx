@@ -55,7 +55,7 @@ export default function Header() {
       )}
 
       {isHome && open && (
-        <div className="absolute top-20 left-0 w-full bg-[#105D48] flex flex-col items-start px-6 py-4 gap-3 md:hidden shadow-lg z-50">
+        <div className="absolute top-15 left-0 w-full bg-[#105D48] flex flex-col items-start px-6 py-4 gap-3 md:hidden shadow-lg z-50">
           <Link
             href="/all-news"
             className="text-white border-b border-white pb-2 w-full"

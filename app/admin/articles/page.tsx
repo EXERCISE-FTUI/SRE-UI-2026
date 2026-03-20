@@ -77,7 +77,7 @@ export default function ArticesPage() {
                     Article Management
                 </h1>
 
-                <div className="relative w-full h-auto flex justify-center items-center flex-wrap flex-row gap-x-20 gap-y-5 mt-5">
+                <div className="relative w-full h-auto flex justify-center items-start flex-wrap flex-row gap-x-20 gap-y-5 mt-5">
                     {articles.map((article) => (
                         <div key={article.article_id} className="w-65">
                             <div

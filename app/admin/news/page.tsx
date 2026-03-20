@@ -77,7 +77,7 @@ export default function NewsPage() {
                     News Management
                 </h1>
 
-                <div className="relative w-full h-auto flex justify-center items-center flex-wrap flex-row gap-x-20 gap-y-5 mt-5">
+                <div className="relative w-full h-auto flex justify-center items-start flex-wrap flex-row gap-x-20 gap-y-5 mt-5">
                     {news.map((news) => (
                         <div key={news.news_id} className="w-65">
                             <div
