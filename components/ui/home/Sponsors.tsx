@@ -2,7 +2,8 @@
 
 import React from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
+import AutoScroll from "embla-carousel-auto-scroll";
+//import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 
 // Duplicated array to ensure infinite scrolling works perfectly
@@ -19,9 +20,15 @@ const SPONSORS = [
 
 export default function Sponsors() {
   const [emblaRef] = useEmblaCarousel(
-    { loop: true, align: "start" },
-    [Autoplay({ delay: 3000, stopOnInteraction: false })]
-  );
+  { loop: true, align: "start" },
+  [
+    AutoScroll({
+      speed: 1, 
+      stopOnInteraction: false,
+      stopOnMouseEnter: false,
+    }),
+  ]
+);
 
   return (
     <section className="w-full py-20 flex flex-col items-center gap-12 bg-white overflow-hidden">
