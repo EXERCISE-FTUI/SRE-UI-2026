@@ -30,8 +30,8 @@ const ReadOtherNews: React.FC<ReadOtherNewsProps> = ({ title, newsItems, baseRou
               />
             </div>
 
-            <div className="mt-[35px] flex justify-center px-4">
-              <p className="text-[20px] font-extrabold text-[#105D48] text-center leading-tight font-sans">
+            <div className="mt-[20px] flex justify-center px-4">
+              <p className="text-[20px] font-extrabold text-[#105D48] text-center leading-tight font-sans line-clamp-4">
                 {item.title}
               </p>
             </div>

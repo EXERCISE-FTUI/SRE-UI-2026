@@ -51,7 +51,7 @@ const AllArticlePage = async () => {
       {/* Main Content */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-12 py-8 md:py-12 lg:py-16">
         {/* Page Title */}
-        <h1 className="font-['SF_Pro_Display'] font-bold text-3xl md:text-4xl lg:text-[80px] 2xl:text-[80px] text-[#105D48] text-center mb-6 md:mb-8 lg:mb-12">
+        <h1 className="font-['SF_Pro_Display'] font-bold text-3xl md:text-4xl lg:text-[60px] 2xl:text-[60px] text-[#105D48] text-center mb-6 md:mb-8 lg:mb-12">
           All Articles
         </h1>
 

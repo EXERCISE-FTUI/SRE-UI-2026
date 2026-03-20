@@ -16,6 +16,14 @@
   }
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @theme {
   --color-yellow0: #D1AE00;
   --color-yellow1: #FBD100;
