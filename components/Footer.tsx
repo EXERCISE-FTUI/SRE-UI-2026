@@ -23,7 +23,7 @@ export default function Footer() {
           </div>
 
           {/* Social Links and Info Section */}
-          <div className="flex flex-col items-center lg:items-start gap-6 w-full lg:w-auto mr-20 lg:scale-90">
+          <div className="flex flex-col items-center justify-center lg:items-start gap-6 w-full lg:w-auto lg:mr-20 lg:scale-90">
             {/* Instagram Link */}
             <Link
               href="https://www.instagram.com/sreui.chapter/"
