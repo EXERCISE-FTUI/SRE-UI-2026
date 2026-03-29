@@ -98,6 +98,16 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
 
   return (
     <div className={`relative min-h-screen bg-white overflow-x-hidden overflow-y-hidden ${raleway.className}`}>
+      {/* Decoration right side */}
+      <div className="absolute right-[-200] top-[575px] w-[220px] sm:w-[260px] md:w-[300px] pointer-events-none">
+        <Image
+          src="/WigglyThingy.png"
+          alt=""
+          width={500}
+          height={600}
+          className="object-contain w-[1200px] h-auto"
+        />
+      </div>
 
       {/* Top windmill image */}
       <div
@@ -117,13 +127,16 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
       <div className="relative z-10 max-w-7xl mx-auto mt-20 md:mt-40 px-6 sm:px-8 md:px-16 pt-10 md:pt-20 pb-[420px]">
 
         {/* Badge */}
-        <div className="inline-block bg-white/80 backdrop-blur-sm border border-gray-200 rounded-2xl px-6 sm:px-8 py-3 sm:py-4 mb-8 sm:mb-10 shadow-sm">
-          <span className="text-[#105D48] font-extrabold text-xl sm:text-2xl tracking-wide">{currentLomba.badge}</span>
-        </div>
+      <div className="inline-block bg-white/10 backdrop-blur-md border border-gray-200 rounded-full px-16 sm:px-20 py-3 sm:py-4 mb-3 shadow-[8px_11px_6px_rgba(0,0,0,0.4)] -rotate-2">
+      <span className="bg-gradient-to-r from-[#257069] to-[#8DEFA4] bg-clip-text text-transparent font-extrabold text-3xl sm:text-4xl tracking-wide">
+        {currentLomba.badge}
+      </span>
+    </div>
 
-        {/* Title */}
+      {/* Title */}
+      <div className="mb-6 sm:mb-8">
         <h1
-          className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 leading-tight"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight"
           style={{
             background: 'linear-gradient(90deg, #105D48 0%, #8DEFA4 88%)',
             WebkitBackgroundClip: 'text',
@@ -133,6 +146,7 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
         >
           {currentLomba.subtitle}
         </h1>
+      </div>
 
         {/* Description — Open Sans */}
         <p className={`${openSans.className} text-gray-700 text-lg sm:text-xl md:text-2xl leading-relaxed text-justify mb-16 sm:mb-24`}>
@@ -140,8 +154,8 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
         </p>
 
         {/* Theme badge */}
-        <div className="inline-block bg-gradient-to-r from-[#105D48] to-[#34a853] rounded-full px-6 sm:px-8 py-2 sm:py-3 mb-5 sm:mb-6">
-          <span className="text-white font-semibold text-base sm:text-lg">Theme</span>
+        <div className="inline-block bg-gradient-to-r from-[#257069] to-[#8DEFA4] rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-5 sm:mb-6 -rotate-4">
+          <span className="text-white font-semibold text2xl sm:text-4xl">Theme</span>
         </div>
 
         {/* Theme quote — Open Sans */}
@@ -155,40 +169,58 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
         </p>
 
         {/* Timeline */}
-        <div className="border border-gray-200 rounded-2xl p-4 sm:p-8 bg-white/80 backdrop-blur-sm shadow-sm overflow-x-auto mb-16 sm:mb-24">
-          <svg width="100%" viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
+        <div className="mb-16 sm:mb-24">
+          {/* Timeline Overview header */}
+          <div className="flex items-center gap-4 mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#7dc142] whitespace-nowrap">
+              Timeline Overview
+            </h2>
+            <div className="flex-1 h-[2px] bg-gradient-to-r from-[#105D48] to-[#7dc142]" />
+            <Image
+              src="/robot.png"
+              alt="Robot mascot"
+              width={250}
+              height={250}
+              className="object-contain w-[90px] sm:w-[110px] md:w-[130px] h-auto"
+            />
+          </div>
 
-            <line x1="60" y1="135" x2="620" y2="135" stroke="#7dc142" strokeWidth="1.5" strokeDasharray="6 5"/>
+          {/* Timeline box */}
+          <div className="border border-gray-200 rounded-2xl p-4 sm:p-8 bg-white/80 backdrop-blur-sm shadow-sm overflow-x-auto">
+            <svg width="100%" viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
 
-            {[60, 172, 284, 396, 508, 620].map((x, i) => (
-              <path
-                key={i}
-                d={`M${x},${135 - 14} L${x + 4},${135 - 4} L${x + 14},${135} L${x + 4},${135 + 4} L${x},${135 + 14} L${x - 4},${135 + 4} L${x - 14},${135} L${x - 4},${135 - 4} Z`}
-                fill="#105D48"
-              />
-            ))}
+              <line x1="60" y1="135" x2="620" y2="135" stroke="#7dc142" strokeWidth="1.5" strokeDasharray="6 5"/>
 
-            {/* Top labels */}
-            <text x="172" y="75" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.top[0].label}</text>
-            <text x="172" y="93" textAnchor="middle" fill="#6b7280" fontSize="12">{events.top[0].date}</text>
+              {[60, 172, 284, 396, 508, 620].map((x, i) => (
+                <path
+                  key={i}
+                  d={`M${x},${135 - 14} L${x + 4},${135 - 4} L${x + 14},${135} L${x + 4},${135 + 4} L${x},${135 + 14} L${x - 4},${135 + 4} L${x - 14},${135} L${x - 4},${135 - 4} Z`}
+                  fill="#105D48"
+                />
+              ))}
 
-            <text x="396" y="75" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.top[1].label}</text>
-            <text x="396" y="93" textAnchor="middle" fill="#6b7280" fontSize="12">{events.top[1].date}</text>
+              {/* Top labels */}
+              <text x="172" y="75" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.top[0].label}</text>
+              <text x="172" y="93" textAnchor="middle" fill="#6b7280" fontSize="12">{events.top[0].date}</text>
 
-            <text x="610" y="75" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.top[2].label}</text>
-            <text x="610" y="93" textAnchor="middle" fill="#6b7280" fontSize="12">{events.top[2].date}</text>
+              <text x="396" y="75" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.top[1].label}</text>
+              <text x="396" y="93" textAnchor="middle" fill="#6b7280" fontSize="12">{events.top[1].date}</text>
 
-            {/* Bottom labels */}
-            <text x="60" y="168" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.bottom[0].label}</text>
-            <text x="60" y="186" textAnchor="middle" fill="#6b7280" fontSize="12">{events.bottom[0].date}</text>
+              <text x="610" y="75" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.top[2].label}</text>
+              <text x="610" y="93" textAnchor="middle" fill="#6b7280" fontSize="12">{events.top[2].date}</text>
 
-            <text x="284" y="168" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.bottom[1].label}</text>
-            <text x="284" y="186" textAnchor="middle" fill="#6b7280" fontSize="12">{events.bottom[1].date}</text>
+              {/* Bottom labels */}
+              <text x="64" y="176" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.bottom[0].label}</text>
+              <text x="64" y="194" textAnchor="middle" fill="#6b7280" fontSize="12">{events.bottom[0].date}</text>
 
-            <text x="508" y="168" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.bottom[2].label}</text>
-            <text x="508" y="186" textAnchor="middle" fill="#6b7280" fontSize="12">{events.bottom[2].date}</text>
+              <text x="284" y="176" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.bottom[1].label}</text>
+              <text x="284" y="194" textAnchor="middle" fill="#6b7280" fontSize="12">{events.bottom[1].date}</text>
 
-          </svg>
+              <text x="508" y="176" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.bottom[2].label}</text>
+              <text x="508" y="194" textAnchor="middle" fill="#6b7280" fontSize="12">{events.bottom[2].date}</text>
+
+            </svg>
+          </div>
         </div>
 
         {/* Contact */}
