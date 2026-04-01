@@ -4,49 +4,90 @@ import { Raleway, Open_Sans } from 'next/font/google';
 const raleway = Raleway({ subsets: ['latin'] });
 const openSans = Open_Sans({ subsets: ['latin'] });
 
-const timelineEvents: Record<string, { top: { label: string; date: string }[]; bottom: { label: string; date: string }[] }> = {
+// Registration windows per lomba
+const registrationWindows: Record<string, { start: Date; end: Date }> = {
+  REMCC: {
+    start: new Date('2026-03-31'),
+    end: new Date('2026-04-19'),
+  },
+  IBCC: {
+    start: new Date('2026-04-12'),
+    end: new Date('2026-05-06'),
+  },
+  REPPC: {
+    start: new Date('2026-04-08'),
+    end: new Date('2026-05-05'),
+  },
+};
+
+const REGISTER_FORM_URL = 'https://forms.gle/1LUW2rNZxSb71TNi9';
+
+function getRegisterState(lomba: string): 'coming_soon' | 'open' | 'closed' {
+  const window = registrationWindows[lomba];
+  if (!window) return 'closed';
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  if (today < window.start) return 'coming_soon';
+  if (today > window.end) return 'closed';
+  return 'open';
+}
+
+const timelineEvents: Record<
+  string,
+  { top: { label: string; date: string }[]; bottom: { label: string; date: string }[] }
+> = {
   REPPC: {
     top: [
-      { label: 'Case Release', date: '20 April 2026' },
-      { label: 'Finalist Announcement', date: '2 June 2025' },
-      { label: 'Final Stage', date: '21 June 2025' },
+      { label: 'Open Registration', date: '8 Apr - 5 May 2026' },
+      { label: 'Semifinalist Announcement', date: '20 May 2026' },
+      { label: 'Final Stage', date: '11 - 24 Jun 2026' },
     ],
     bottom: [
-      { label: 'Open Registration', date: '31 March - 19 April 2026' },
-      { label: 'Full-Paper Submission Deadlines', date: '21 April - 22 April 2026' },
-      { label: 'Mentoring Session', date: '10 - 12 June 2025' },
+      { label: 'Preliminary Stage', date: '29 Apr - 12 May 2026' },
+      { label: 'Abstract Screening', date: '13 - 19 May 2026' },
+      { label: 'Mentoring Session', date: '10 - 12 Jun 2026' },
     ],
   },
   IBCC: {
     top: [
-      { label: 'Case Release', date: '20 April 2026' },
-      { label: 'Finalist Announcement', date: '2 June 2025' },
-      { label: 'Final Stage', date: '21 June 2025' },
+      { label: 'Open Registration', date: '12 Apr - 6 May 2026' },
+      { label: 'Semifinalist Announcement', date: '21 May 2026' },
+      { label: 'Final Stage', date: '12 - 24 Jun 2026' },
     ],
     bottom: [
-      { label: 'Open Registration', date: '31 March - 19 April 2026' },
-      { label: 'Full-Paper Submission Deadlines', date: '21 April - 22 April 2026' },
-      { label: 'Mentoring Session', date: '10 - 12 June 2025' },
+      { label: 'Preliminary Stage', date: '2 - 12 May 2026' },
+      { label: 'Abstract Screening', date: '13 - 20 May 2026' },
+      { label: 'Mentoring Semifinal', date: '29 May 2026' },
     ],
   },
   REMCC: {
     top: [
       { label: 'Case Release', date: '20 April 2026' },
-      { label: 'Finalist Announcement', date: '2 June 2025' },
-      { label: 'Final Stage', date: '21 June 2025' },
+      { label: 'Finalist Announcement', date: '28 April 2026' },
+      { label: 'Final Pitching Day', date: '2 May 2026' },
     ],
     bottom: [
       { label: 'Open Registration', date: '31 March - 19 April 2026' },
-      { label: 'Full-Paper Submission Deadlines', date: '21 April - 22 April 2026' },
-      { label: 'Mentoring Session', date: '10 - 12 June 2025' },
+      { label: '48 Hours Case Cracking', date: '21 - 22 April 2026' },
+      { label: 'Abstract Screening', date: '23 - 27 April 2026' },
     ],
   },
 };
 
-const contacts = [
-  { name: 'Fajar Aditya', phone: '+6287882733365' },
-  { name: 'Michael Christian', phone: '+628118682989' },
-];
+const contacts: Record<string, { name: string; phone: string }[]> = {
+  REPPC: [
+    { name: 'Fajar Aditya', phone: '+6287882733365' },
+    { name: 'Michael Christian', phone: '+628118682989' },
+  ],
+  IBCC: [
+    { name: 'Annisa Fauziyyah', phone: '+6287845099825' },
+    { name: 'Gus Rafa Aleano', phone: '+6281282287711' },
+  ],
+  REMCC: [
+    { name: 'Akbar Sucipto', phone: '+6282258108805' },
+    { name: 'Rahel Marsela', phone: '+628875475115' },
+  ],
+};
 
 const sponsors = [
   { src: '/nex_indonesia.svg', alt: 'New Energy Nexus Indonesia' },
@@ -93,8 +134,46 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
 
   const currentLomba = lombaData[lomba as keyof typeof lombaData];
   const events = timelineEvents[lomba] ?? timelineEvents['REPPC'];
+  const registerState = getRegisterState(lomba);
 
   if (!currentLomba) return <h1>Lomba Not Found</h1>;
+
+  const registerButton = () => {
+    if (registerState === 'open') {
+      return (
+        <a
+          href={REGISTER_FORM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center w-48 sm:w-64 md:w-80 h-12 sm:h-16 md:h-20 rounded-full font-semibold text-white text-lg sm:text-xl md:text-3xl transition hover:opacity-90"
+          style={{ background: 'linear-gradient(135deg, #7dc142, #34a853)' }}
+        >
+          Register Now!
+        </a>
+      );
+    }
+    if (registerState === 'coming_soon') {
+      return (
+        <div
+          className="flex items-center justify-center w-48 sm:w-64 md:w-80 h-12 sm:h-16 md:h-20 rounded-full font-semibold text-white text-lg sm:text-xl md:text-3xl cursor-not-allowed select-none"
+          style={{ background: 'linear-gradient(135deg, #a0a0a0, #6b6b6b)' }}
+          title="Registration has not opened yet"
+        >
+          Coming Soon
+        </div>
+      );
+    }
+    // closed
+    return (
+      <div
+        className="flex items-center justify-center w-48 sm:w-64 md:w-80 h-12 sm:h-16 md:h-20 rounded-full font-semibold text-white text-lg sm:text-xl md:text-3xl cursor-not-allowed select-none"
+        style={{ background: 'linear-gradient(135deg, #a0a0a0, #6b6b6b)' }}
+        title="Registration is closed"
+      >
+        Closed
+      </div>
+    );
+  };
 
   return (
     <div className={`relative min-h-screen bg-white overflow-x-hidden overflow-y-hidden ${raleway.className}`}>
@@ -127,28 +206,28 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
       <div className="relative z-10 max-w-7xl mx-auto mt-20 md:mt-40 px-6 sm:px-8 md:px-16 pt-10 md:pt-20 pb-[420px]">
 
         {/* Badge */}
-      <div className="inline-block bg-white/10 backdrop-blur-md border border-gray-200 rounded-full px-16 sm:px-20 py-3 sm:py-4 mb-3 shadow-[8px_11px_6px_rgba(0,0,0,0.4)] -rotate-2">
-      <span className="bg-gradient-to-r from-[#257069] to-[#8DEFA4] bg-clip-text text-transparent font-extrabold text-3xl sm:text-4xl tracking-wide">
-        {currentLomba.badge}
-      </span>
-    </div>
+        <div className="inline-block bg-white/10 backdrop-blur-md border border-gray-200 rounded-full px-16 sm:px-20 py-3 sm:py-4 mb-3 shadow-[8px_11px_6px_rgba(0,0,0,0.4)] -rotate-2">
+          <span className="bg-gradient-to-r from-[#257069] to-[#8DEFA4] bg-clip-text text-transparent font-extrabold text-3xl sm:text-4xl tracking-wide">
+            {currentLomba.badge}
+          </span>
+        </div>
 
-      {/* Title */}
-      <div className="mb-6 sm:mb-8">
-        <h1
-          className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight"
-          style={{
-            background: 'linear-gradient(90deg, #105D48 0%, #8DEFA4 88%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-          }}
-        >
-          {currentLomba.subtitle}
-        </h1>
-      </div>
+        {/* Title */}
+        <div className="mb-6 sm:mb-8">
+          <h1
+            className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight"
+            style={{
+              background: 'linear-gradient(90deg, #105D48 0%, #8DEFA4 88%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+            }}
+          >
+            {currentLomba.subtitle}
+          </h1>
+        </div>
 
-        {/* Description — Open Sans */}
+        {/* Description */}
         <p className={`${openSans.className} text-gray-700 text-lg sm:text-xl md:text-2xl leading-relaxed text-justify mb-16 sm:mb-24`}>
           {currentLomba.description}
         </p>
@@ -158,38 +237,36 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
           <span className="text-white font-semibold text2xl sm:text-4xl">Theme</span>
         </div>
 
-        {/* Theme quote — Open Sans */}
+        {/* Theme quote */}
         <p className={`${openSans.className} text-[#7dc142] text-2xl sm:text-3xl md:text-4xl font-semibold italic text-center leading-relaxed mb-10 sm:mb-14`}>
           {currentLomba.themeQuote}
         </p>
 
-        {/* Theme description — Open Sans */}
+        {/* Theme description */}
         <p className={`${openSans.className} text-gray-700 text-lg sm:text-xl md:text-2xl leading-relaxed text-justify mb-16 sm:mb-24`}>
           {currentLomba.theme}
         </p>
 
         {/* Timeline */}
         <div className="mb-16 sm:mb-24">
-          {/* Timeline Overview header */}
-          <div className="flex items-center gap-4 mb-6">
+          <div className="flex items-center gap-4 mb-6 justify-center sm:justify-start">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#7dc142] whitespace-nowrap">
               Timeline Overview
             </h2>
-            <div className="flex-1 h-[2px] bg-gradient-to-r from-[#105D48] to-[#7dc142]" />
+            <div className="hidden sm:block flex-1 h-[2px] bg-gradient-to-r from-[#105D48] to-[#7dc142]" />
             <Image
               src="/robot.png"
               alt="Robot mascot"
               width={250}
               height={250}
-              className="object-contain w-[90px] sm:w-[110px] md:w-[130px] h-auto"
+              className="hidden sm:block object-contain sm:w-[110px] md:w-[130px] h-auto"
             />
           </div>
 
-          {/* Timeline box */}
           <div className="border border-gray-200 rounded-2xl p-4 sm:p-8 bg-white/80 backdrop-blur-sm shadow-sm overflow-x-auto">
             <svg width="100%" viewBox="0 0 680 280" xmlns="http://www.w3.org/2000/svg">
 
-              <line x1="60" y1="135" x2="620" y2="135" stroke="#7dc142" strokeWidth="1.5" strokeDasharray="6 5"/>
+              <line x1="60" y1="135" x2="620" y2="135" stroke="#7dc142" strokeWidth="1.5" strokeDasharray="6 5" />
 
               {[60, 172, 284, 396, 508, 620].map((x, i) => (
                 <path
@@ -200,24 +277,24 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
               ))}
 
               {/* Top labels */}
-              <text x="172" y="75" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.top[0].label}</text>
-              <text x="172" y="93" textAnchor="middle" fill="#6b7280" fontSize="12">{events.top[0].date}</text>
+              <text x="172" y="65" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="13">{events.top[0].label}</text>
+              <text x="172" y="83" textAnchor="middle" fill="#6b7280" fontSize="11">{events.top[0].date}</text>
 
-              <text x="396" y="75" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.top[1].label}</text>
-              <text x="396" y="93" textAnchor="middle" fill="#6b7280" fontSize="12">{events.top[1].date}</text>
+              <text x="396" y="65" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="13">{events.top[1].label}</text>
+              <text x="396" y="83" textAnchor="middle" fill="#6b7280" fontSize="11">{events.top[1].date}</text>
 
-              <text x="610" y="75" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.top[2].label}</text>
-              <text x="610" y="93" textAnchor="middle" fill="#6b7280" fontSize="12">{events.top[2].date}</text>
+              <text x="610" y="65" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="13">{events.top[2].label}</text>
+              <text x="610" y="83" textAnchor="middle" fill="#6b7280" fontSize="11">{events.top[2].date}</text>
 
               {/* Bottom labels */}
-              <text x="64" y="176" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.bottom[0].label}</text>
-              <text x="64" y="194" textAnchor="middle" fill="#6b7280" fontSize="12">{events.bottom[0].date}</text>
+              <text x="64" y="176" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="13">{events.bottom[0].label}</text>
+              <text x="64" y="194" textAnchor="middle" fill="#6b7280" fontSize="11">{events.bottom[0].date}</text>
 
-              <text x="284" y="176" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.bottom[1].label}</text>
-              <text x="284" y="194" textAnchor="middle" fill="#6b7280" fontSize="12">{events.bottom[1].date}</text>
+              <text x="284" y="176" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="13">{events.bottom[1].label}</text>
+              <text x="284" y="194" textAnchor="middle" fill="#6b7280" fontSize="11">{events.bottom[1].date}</text>
 
-              <text x="508" y="176" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="14">{events.bottom[2].label}</text>
-              <text x="508" y="194" textAnchor="middle" fill="#6b7280" fontSize="12">{events.bottom[2].date}</text>
+              <text x="508" y="176" textAnchor="middle" fill="#7dc142" fontWeight="700" fontSize="13">{events.bottom[2].label}</text>
+              <text x="508" y="194" textAnchor="middle" fill="#6b7280" fontSize="11">{events.bottom[2].date}</text>
 
             </svg>
           </div>
@@ -229,9 +306,8 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
             For further information
           </h3>
           <div className="flex flex-col sm:flex-row justify-center gap-6 sm:gap-12 md:gap-20 mb-10">
-            {contacts.map((c, i) => (
+            {(contacts[lomba] ?? contacts['REPPC']).map((c, i) => (
               <div key={i} className="px-6 py-4">
-                {/* Open Sans for contact details */}
                 <p className={`${openSans.className} font-bold text-gray-800 text-lg sm:text-xl md:text-2xl`}>{c.name}</p>
                 <p className={`${openSans.className} text-gray-600 text-lg sm:text-xl md:text-2xl`}>{c.phone}</p>
               </div>
@@ -240,15 +316,11 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 mb-16">
+            {registerButton()}
             <a
-              href="#"
-              className="flex items-center justify-center w-48 sm:w-64 md:w-80 h-12 sm:h-16 md:h-20 rounded-full font-semibold text-white text-lg sm:text-xl md:text-3xl transition hover:opacity-90"
-              style={{ background: 'linear-gradient(135deg, #7dc142, #34a853)' }}
-            >
-              Register Now!
-            </a>
-            <a
-              href="#"
+              href="https://drive.google.com/drive/folders/1lDOkvVq2oD2SpvyfkFnahaB5hkOB4vIn"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center justify-center w-48 sm:w-64 md:w-80 h-12 sm:h-16 md:h-20 rounded-full font-semibold text-white text-lg sm:text-xl md:text-3xl transition hover:opacity-90"
               style={{ background: 'linear-gradient(135deg, #34a853, #105D48)' }}
             >
