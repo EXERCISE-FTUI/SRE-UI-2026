@@ -38,24 +38,24 @@ const timelineEvents: Record<
 > = {
   REPPC: {
     top: [
-      { label: 'Open Registration', date: '8 Apr - 5 May 2026' },
+      { label: 'Preliminary Stage', date: '29 Apr - 12 May 2026' },
       { label: 'Semifinalist Announcement', date: '20 May 2026' },
       { label: 'Final Stage', date: '11 - 24 Jun 2026' },
     ],
     bottom: [
-      { label: 'Preliminary Stage', date: '29 Apr - 12 May 2026' },
+      { label: 'Open Registration', date: '8 Apr - 28 Apr 2026' },
       { label: 'Abstract Screening', date: '13 - 19 May 2026' },
       { label: 'Mentoring Session', date: '10 - 12 Jun 2026' },
     ],
   },
   IBCC: {
     top: [
-      { label: 'Open Registration', date: '12 Apr - 6 May 2026' },
+      { label: 'Preliminary Stage', date: '2 - 12 May 2026' },
       { label: 'Semifinalist Announcement', date: '21 May 2026' },
       { label: 'Final Stage', date: '12 - 24 Jun 2026' },
     ],
     bottom: [
-      { label: 'Preliminary Stage', date: '2 - 12 May 2026' },
+      { label: 'Open Registration', date: '12 Apr - 1 May 2026' },
       { label: 'Abstract Screening', date: '13 - 20 May 2026' },
       { label: 'Mentoring Semifinal', date: '29 May 2026' },
     ],
@@ -67,7 +67,7 @@ const timelineEvents: Record<
       { label: 'Final Pitching Day', date: '2 May 2026' },
     ],
     bottom: [
-      { label: 'Open Registration', date: '31 March - 19 April 2026' },
+      { label: 'Open Registration', date: '31 March - 14 April 2026' },
       { label: '48 Hours Case Cracking', date: '21 - 22 April 2026' },
       { label: 'Abstract Screening', date: '23 - 27 April 2026' },
     ],
