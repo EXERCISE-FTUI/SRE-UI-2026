@@ -89,12 +89,6 @@ const contacts: Record<string, { name: string; phone: string }[]> = {
   ],
 };
 
-const sponsors = [
-  { src: '/nex_indonesia.svg', alt: 'New Energy Nexus Indonesia' },
-  { src: '/harita.svg', alt: 'Harita Nickel' },
-  { src: '/tripatra.svg', alt: 'Tripatra' },
-  { src: '/pertamina.svg', alt: 'Pertamina' },
-];
 
 const lombaData = {
   IBCC: {
@@ -338,25 +332,6 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
               className="object-contain w-[240px] sm:w-[320px] md:w-[420px]"
             />
           </div>
-
-          {/* Sponsors */}
-          <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-10">
-            {sponsors.map((s, i) => (
-              <div key={i} className="w-32 h-16 sm:w-48 sm:h-24 md:w-64 md:h-32 relative hover:grayscale-0 transition">
-                <Image src={s.src} alt={s.alt} fill className="object-contain" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Our Sponsor footer label */}
-        <div className="text-center py-5">
-          <span
-            className="italic font-bold text-4xl sm:text-5xl md:text-7xl text-white"
-            style={{ WebkitTextStroke: '1px #105D48' }}
-          >
-            Our Sponsor
-          </span>
         </div>
 
       </div>
