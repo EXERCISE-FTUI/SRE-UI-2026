@@ -33,7 +33,7 @@ export default function Sponsors() {
   return (
     <section className="w-full py-20 flex flex-col items-center gap-12 bg-white overflow-hidden">
       <h2
-        className="text-4xl md:text-5xl font-bold italic text-[#1b4f43]"
+        className="text-3xl md:text-5xl font-bold italic text-[#1b4f43] text-center"
         style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
       >
         Our Previous Sponsors & Collaborations
