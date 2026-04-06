@@ -36,7 +36,7 @@ export default function Sponsors() {
         className="text-4xl md:text-5xl font-bold italic text-[#1b4f43]"
         style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
       >
-        Our Sponsor
+        Our Previous Sponsors & Collaborations
       </h2>
 
       {/* THE FIX: Added overflow-hidden to this specific container */}

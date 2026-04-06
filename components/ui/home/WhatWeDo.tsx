@@ -6,14 +6,12 @@ import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 
 const EVENTS = [
-  { id: 1, title: "Event 1", src: "/event1.svg" },
-  { id: 2, title: "Event 2", src: "/event2.svg" },
-  { id: 3, title: "Event 3", src: "/event3.svg" },
-  { id: 4, title: "Event 4", src: "/event1.svg" },
-  { id: 5, title: "Event 1", src: "/event2.svg" },
-  { id: 6, title: "Event 2", src: "/event3.svg" },
-  { id: 7, title: "Event 3", src: "/event1.svg" },
-  { id: 8, title: "Event 4", src: "/event2.svg" },
+  { id: 1, title: "SRE GREEN 2026 Main Event", src: "/main_event.jpg" },
+  { id: 2, title: "Internal Training", src: "/internal_training.jpg" },
+  { id: 3, title: "Roadshow SRE GREEN 2026", src: "/roadshow.jpg" },
+  { id: 4, title: "Bi-Weekly Meeting", src: "/meeting.jpg" },
+  { id: 5, title: "SRE UI NETWORKING", src: "/networking.jpg" },
+  { id: 6, title: "SRE UI NETWORKING", src: "/networking2.jpg" },
 ];
 
 export default function WhatWeDo() {
@@ -62,10 +60,10 @@ export default function WhatWeDo() {
         style={{ fontFamily: "'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif" }}
       >
         <div className="bg-gradient-to-r from-[#105D48] to-[#FEF200] text-white px-6 py-1">
-          What
+          Our Impact
         </div>
         <div className="text-[#1b4f43] mt-2">
-          We do
+          in Action
         </div>
       </div>
 

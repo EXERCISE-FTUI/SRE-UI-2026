@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="relative w-full min-h-[80vh] md:h-[600px] flex items-center justify-center bg-[#1b4f43] overflow-hidden">
+    <section className="relative w-full min-h-[80vh] lg:min-h-screen lg:mt-[-90px] md:h-[600px] flex items-center justify-center bg-[#1b4f43] overflow-hidden">
       <Image 
         src="/herobg.svg" 
         alt="Wind turbines background" 
@@ -11,9 +11,9 @@ export default function Hero() {
         className="object-cover opacity-30 mix-blend-soft-light pointer-events-none z-0 scale-x-[-1]" 
       />
 
-      <div className="absolute inset-x-0 top-0 h-[60%] bg-gradient-to-b from-[#105D48] to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute inset-x-0 top-0 lg:top-[90px] h-[60%] bg-gradient-to-b from-[#105D48] to-transparent z-10 pointer-events-none"></div>
 
-      <div className="absolute inset-x-0 bottom-0 h-[60%] bg-gradient-to-t from-[#FEF200]/30 to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute inset-x-0 bottom-0 lg:bottom-[-90px] h-[60%] bg-gradient-to-t from-[#FEF200]/30 to-transparent z-10 pointer-events-none"></div>
 
       <div className="absolute left-0 bottom-0 translate-y-[5%] flex justify-start z-20 pointer-events-none">
         <img 
