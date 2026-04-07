@@ -32,6 +32,12 @@ function getRegisterState(lomba: string): 'coming_soon' | 'open' | 'closed' {
   return 'open';
 }
 
+const guidebookUrls: Record<string, string> = {
+  REMCC: 'https://drive.google.com/drive/folders/1lDOkvVq2oD2SpvyfkFnahaB5hkOB4vIn',
+  IBCC: '#', // placeholder
+  REPPC: 'https://drive.google.com/drive/folders/1A52XHkaM1LRD6C2Qu0X0euJyBv0OTgK9?usp=sharing',
+};
+
 const timelineEvents: Record<
   string,
   { top: { label: string; date: string }[]; bottom: { label: string; date: string }[] }
@@ -45,7 +51,7 @@ const timelineEvents: Record<
     bottom: [
       { label: 'Open Registration', date: '8 Apr - 28 Apr 2026' },
       { label: 'Abstract Screening', date: '13 - 19 May 2026' },
-      { label: 'Mentoring Session', date: '10 - 12 Jun 2026' },
+      { label: 'Final Announcement', date: '10 Jun 2026' },
     ],
   },
   IBCC: {
@@ -312,14 +318,14 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 md:gap-8 mb-16">
             {registerButton()}
             <a
-              href="https://drive.google.com/drive/folders/1lDOkvVq2oD2SpvyfkFnahaB5hkOB4vIn"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center w-48 sm:w-64 md:w-80 h-12 sm:h-16 md:h-20 rounded-full font-semibold text-white text-lg sm:text-xl md:text-3xl transition hover:opacity-90"
-              style={{ background: 'linear-gradient(135deg, #34a853, #105D48)' }}
-            >
-              Guidebook
-            </a>
+              href={guidebookUrls[lomba] ?? '#'}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center w-48 sm:w-64 md:w-80 h-12 sm:h-16 md:h-20 rounded-full font-semibold text-white text-lg sm:text-xl md:text-3xl transition hover:opacity-90"
+            style={{ background: 'linear-gradient(135deg, #34a853, #105D48)' }}
+          >
+            Guidebook
+          </a>
           </div>
 
           {/* Logo */}
