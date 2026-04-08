@@ -4,44 +4,58 @@ import { Raleway, Open_Sans } from 'next/font/google';
 const raleway = Raleway({ subsets: ['latin'] });
 const openSans = Open_Sans({ subsets: ['latin'] });
 
+// Parse date as local time (avoids UTC midnight shifting the day back in UTC+7)
+function localDate(year: number, month: number, day: number): Date {
+  return new Date(year, month - 1, day);
+}
+
 // Registration windows per lomba
 const registrationWindows: Record<string, { start: Date; end: Date }> = {
   REMCC: {
-    start: new Date('2026-03-31'),
-    end: new Date('2026-04-19'),
+    start: localDate(2026, 3, 31),
+    end: localDate(2026, 4, 19),
   },
   IBCC: {
-    start: new Date('2026-04-12'),
-    end: new Date('2026-05-06'),
+    start: localDate(2026, 4, 12),
+    end: localDate(2026, 5, 6),
   },
   REPPC: {
-    start: new Date('2026-04-08'),
-    end: new Date('2026-05-05'),
+    start: localDate(2026, 4, 8),
+    end: localDate(2026, 5, 5),
   },
 };
 
-const REGISTER_FORM_URL = 'https://forms.gle/1LUW2rNZxSb71TNi9';
+const registerFormUrls: Record<string, string> = {
+  REMCC: 'https://forms.gle/1LUW2rNZxSb71TNi9',
+  REPPC: 'https://docs.google.com/forms/d/e/1FAIpQLSefcghP3x0B4pHGczz7otL6aeYEqg2hr9M4l5sfbK50VWLRdw/viewform',
+  IBCC: '#',
+};
 
 function getRegisterState(lomba: string): 'coming_soon' | 'open' | 'closed' {
-  const window = registrationWindows[lomba];
-  if (!window) return 'closed';
+  const win = registrationWindows[lomba];
+  if (!win) return 'closed';
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-  if (today < window.start) return 'coming_soon';
-  if (today > window.end) return 'closed';
+
+  const start = new Date(win.start);
+  start.setHours(0, 0, 0, 0);
+
+  const end = new Date(win.end);
+  end.setHours(23, 59, 59, 999);
+
+  if (today < start) return 'coming_soon';
+  if (today > end) return 'closed';
   return 'open';
 }
 
 const guidebookUrls: Record<string, string> = {
   REMCC: 'https://drive.google.com/drive/folders/1lDOkvVq2oD2SpvyfkFnahaB5hkOB4vIn',
-  IBCC: '#', // placeholder
+  IBCC: '#',
   REPPC: 'https://drive.google.com/drive/folders/1A52XHkaM1LRD6C2Qu0X0euJyBv0OTgK9?usp=sharing',
 };
 
-const timelineEvents: Record<
-  string,
-  { top: { label: string; date: string }[]; bottom: { label: string; date: string }[] }
-> = {
+const timelineEvents: Record<string, { top: { label: string; date: string }[]; bottom: { label: string; date: string }[] }> = {
   REPPC: {
     top: [
       { label: 'Preliminary Stage', date: '29 Apr - 12 May 2026' },
@@ -95,7 +109,6 @@ const contacts: Record<string, { name: string; phone: string }[]> = {
   ],
 };
 
-
 const lombaData = {
   IBCC: {
     badge: 'IBCC',
@@ -142,7 +155,7 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
     if (registerState === 'open') {
       return (
         <a
-          href={REGISTER_FORM_URL}
+          href={registerFormUrls[lomba] ?? '#'}
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center w-48 sm:w-64 md:w-80 h-12 sm:h-16 md:h-20 rounded-full font-semibold text-white text-lg sm:text-xl md:text-3xl transition hover:opacity-90"
@@ -177,6 +190,7 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
 
   return (
     <div className={`relative min-h-screen bg-white overflow-x-hidden overflow-y-hidden ${raleway.className}`}>
+
       {/* Decoration right side */}
       <div className="absolute right-[-200] top-[575px] w-[220px] sm:w-[260px] md:w-[300px] pointer-events-none">
         <Image
@@ -234,7 +248,7 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
 
         {/* Theme badge */}
         <div className="inline-block bg-gradient-to-r from-[#257069] to-[#8DEFA4] rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-5 sm:mb-6 -rotate-4">
-          <span className="text-white font-semibold text2xl sm:text-4xl">Theme</span>
+          <span className="text-white font-semibold text-2xl sm:text-4xl">Theme</span>
         </div>
 
         {/* Theme quote */}
@@ -319,13 +333,13 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
             {registerButton()}
             <a
               href={guidebookUrls[lomba] ?? '#'}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center w-48 sm:w-64 md:w-80 h-12 sm:h-16 md:h-20 rounded-full font-semibold text-white text-lg sm:text-xl md:text-3xl transition hover:opacity-90"
-            style={{ background: 'linear-gradient(135deg, #34a853, #105D48)' }}
-          >
-            Guidebook
-          </a>
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-48 sm:w-64 md:w-80 h-12 sm:h-16 md:h-20 rounded-full font-semibold text-white text-lg sm:text-xl md:text-3xl transition hover:opacity-90"
+              style={{ background: 'linear-gradient(135deg, #34a853, #105D48)' }}
+            >
+              Guidebook
+            </a>
           </div>
 
           {/* Logo */}
