@@ -28,7 +28,7 @@ const registrationWindows: Record<string, { start: Date; end: Date }> = {
 const registerFormUrls: Record<string, string> = {
   REMCC: 'https://forms.gle/1LUW2rNZxSb71TNi9',
   REPPC: 'https://docs.google.com/forms/d/e/1FAIpQLSefcghP3x0B4pHGczz7otL6aeYEqg2hr9M4l5sfbK50VWLRdw/viewform',
-  IBCC: '#',
+  IBCC: 'https://bit.ly/RegistFormIBCCRES26',
 };
 
 function getRegisterState(lomba: string): 'coming_soon' | 'open' | 'closed' {
@@ -51,7 +51,7 @@ function getRegisterState(lomba: string): 'coming_soon' | 'open' | 'closed' {
 
 const guidebookUrls: Record<string, string> = {
   REMCC: 'https://drive.google.com/drive/folders/1lDOkvVq2oD2SpvyfkFnahaB5hkOB4vIn',
-  IBCC: '#',
+  IBCC: 'https://drive.google.com/drive/folders/1mTOmlzQN9_pNb6MC-ffxQ2vuu5pC-ONS',
   REPPC: 'https://drive.google.com/drive/folders/1A52XHkaM1LRD6C2Qu0X0euJyBv0OTgK9?usp=sharing',
 };
 
