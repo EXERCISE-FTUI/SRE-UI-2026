@@ -246,23 +246,6 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
           {currentLomba.description}
         </p>
 
-        {/* Prize Pool */}
-        <div className="flex flex-row items-center justify-center gap-6 sm:gap-10 mb-16 sm:mb-24">
-          <div className="border-l-4 border-[#7dc142] pl-4">
-            <span className={`${raleway.className} text-[#105D48] font-extrabold text-2xl sm:text-4xl uppercase tracking-widest`}>Prize Pool</span>
-          </div>
-          <h2
-            className={`${raleway.className} font-extrabold text-4xl sm:text-5xl md:text-6xl`}
-            style={{
-              background: 'linear-gradient(90deg, #105D48 0%, #8DEFA4 88%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text',
-            }}
-          >
-            15.000.000+ Rupiah
-          </h2>
-        </div>
 
         {/* Theme badge */}
         <div className="inline-block bg-gradient-to-r from-[#257069] to-[#8DEFA4] rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-5 sm:mb-6 -rotate-4">
