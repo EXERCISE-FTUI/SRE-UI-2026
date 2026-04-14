@@ -28,7 +28,7 @@ const registrationWindows: Record<string, { start: Date; end: Date }> = {
 const registerFormUrls: Record<string, string> = {
   REMCC: 'https://forms.gle/1LUW2rNZxSb71TNi9',
   REPPC: 'https://docs.google.com/forms/d/e/1FAIpQLSefcghP3x0B4pHGczz7otL6aeYEqg2hr9M4l5sfbK50VWLRdw/viewform',
-  IBCC: '#',
+  IBCC: 'https://bit.ly/RegistFormIBCCRES26',
 };
 
 function getRegisterState(lomba: string): 'coming_soon' | 'open' | 'closed' {
@@ -51,7 +51,7 @@ function getRegisterState(lomba: string): 'coming_soon' | 'open' | 'closed' {
 
 const guidebookUrls: Record<string, string> = {
   REMCC: 'https://drive.google.com/drive/folders/1lDOkvVq2oD2SpvyfkFnahaB5hkOB4vIn',
-  IBCC: '#',
+  IBCC: 'https://drive.google.com/drive/folders/1mTOmlzQN9_pNb6MC-ffxQ2vuu5pC-ONS',
   REPPC: 'https://drive.google.com/drive/folders/1A52XHkaM1LRD6C2Qu0X0euJyBv0OTgK9?usp=sharing',
 };
 
@@ -245,6 +245,7 @@ export default async function LombaPage({ params }: { params: Promise<{ lomba: s
         <p className={`${openSans.className} text-gray-700 text-lg sm:text-xl md:text-2xl leading-relaxed text-justify mb-16 sm:mb-24`}>
           {currentLomba.description}
         </p>
+
 
         {/* Theme badge */}
         <div className="inline-block bg-gradient-to-r from-[#257069] to-[#8DEFA4] rounded-full px-4 sm:px-6 py-2 sm:py-3 mb-5 sm:mb-6 -rotate-4">
