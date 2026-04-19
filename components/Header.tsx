@@ -230,16 +230,116 @@ export default function Header() {
       )}
 
       {/* ── Neither home nor /res ── */}
+      {/* ── Neither home nor /res ── */}
       {!isHome && !isRes && (
-        <Link href="/">
-          <Image
-            src="/logoHeader.svg"
-            alt="Company Logo"
-            width={298.28}
-            height={48.19}
-            className="w-[137px] md:w-[205px] h-auto object-contain"
-          />
-        </Link>
+        <>
+          {/* Logo — left */}
+          <Link href="/" className="absolute left-4 md:left-10">
+            <Image
+              src="/logoHeader.svg"
+              alt="Company Logo"
+              width={298.28}
+              height={48.19}
+              className="w-[137px] md:w-[205px] h-auto object-contain"
+            />
+          </Link>
+
+          {/* Mobile hamburger */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="absolute right-4 flex flex-col gap-1 lg:hidden"
+          >
+            <span className="w-6 h-[2px] bg-white"></span>
+            <span className="w-6 h-[2px] bg-white"></span>
+            <span className="w-6 h-[2px] bg-white"></span>
+          </button>
+
+          {/* Desktop nav — right side */}
+          <div className="hidden lg:flex items-center gap-4 absolute right-10">
+            <Link
+              href="/all-articles"
+              className="px-4 py-2 border-[1.7px] border-white text-white rounded-full hover:bg-white hover:text-[#105D48] transition"
+            >
+              Articles
+            </Link>
+            <Link
+              href="/all-news"
+              className="px-4 py-2 border-[1.7px] border-white text-white rounded-full hover:bg-white hover:text-[#105D48] transition"
+            >
+              News
+            </Link>
+            <Link
+              href="/res/REMCC"
+              className="px-4 py-2 border-[1.7px] border-white text-white rounded-full hover:bg-white hover:text-[#105D48] transition"
+            >
+              Competitions
+            </Link>
+
+            {/* Events dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setEventsOpen(!eventsOpen)}
+                className="px-4 py-2 border-[1.7px] border-white text-white rounded-full hover:bg-white hover:text-[#105D48] transition flex items-center gap-2"
+              >
+                Events
+                <span className="text-xs">{eventsOpen ? '▲' : '▼'}</span>
+              </button>
+
+              {eventsOpen && (
+                <div className="absolute top-12 right-0 bg-[#105D48] border border-white/20 rounded-xl shadow-lg z-50 min-w-[180px] flex flex-col overflow-hidden">
+                  {events.map(({ label, href }) => (
+                    <Link
+                      key={label}
+                      href={href}
+                      className="px-5 py-3 text-white hover:bg-white/10 transition border-b border-white/10 last:border-none"
+                      onClick={() => setEventsOpen(false)}
+                    >
+                      {label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile dropdown */}
+          {open && (
+            <div className="absolute top-14 left-0 w-full bg-[#105D48] flex flex-col items-start px-6 py-4 gap-3 lg:hidden shadow-lg z-50">
+              <Link href="/all-articles" className="text-white border-b border-white pb-2 w-full" onClick={() => setOpen(false)}>
+                Articles
+              </Link>
+              <Link href="/all-news" className="text-white border-b border-white pb-2 w-full" onClick={() => setOpen(false)}>
+                News
+              </Link>
+              <Link href="/res/REMCC" className="text-white border-b border-white pb-2 w-full" onClick={() => setOpen(false)}>
+                Competitions
+              </Link>
+
+              {/* Events accordion in mobile */}
+              <button
+                className="text-white border-b border-white pb-2 w-full text-left flex justify-between items-center"
+                onClick={() => setMobileEventsOpen(!mobileEventsOpen)}
+              >
+                Events
+                <span className="text-xs">{mobileEventsOpen ? '▲' : '▼'}</span>
+              </button>
+              {mobileEventsOpen && (
+                <div className="flex flex-col gap-2 w-full pl-4">
+                  {events.map(({ label, href }) => (
+                    <Link
+                      key={label}
+                      href={href}
+                      className="text-white/80 border-b border-white/30 pb-2 w-full"
+                      onClick={() => { setOpen(false); setMobileEventsOpen(false); }}
+                    >
+                      {label}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </>
       )}
 
     </header>
